@@ -124,13 +124,18 @@ class FacturacionService(ServiceBase):
                 (clave, cid),
             )
             conn.commit()
+            
+            factura_xml_limpia = factura_xml.replace(
+                '<?xml version="1.0" encoding="UTF-8"?>',
+                ''
+            )
 
             return (
                 "<RespuestaFactura>"
                 "<Estado>VALIDADA</Estado>"
                 "<Mensaje>Factura generada correctamente</Mensaje>"
                 f"<ClaveAcceso>{clave}</ClaveAcceso>"
-                f"<FacturaXML>{factura_xml.replace('<?xml version=\"1.0\" encoding=\"UTF-8\"?>', '')}</FacturaXML>"
+                f"<FacturaXML>{factura_xml_limpia}</FacturaXML>"
                 "</RespuestaFactura>"
             )
         except Exception as e:
